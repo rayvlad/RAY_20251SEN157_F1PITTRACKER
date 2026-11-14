@@ -38,14 +38,14 @@ DRIVER, CONSTRUCTOR, CIRCUIT, RACE, RESULT_STATUS, RESULT, PIT_STOP, LAP_TIME, A
 
 ## Planned PL/SQL Features
 **Functions**
--driver_season_points(driver_id, year) totals a driver’s points for a season.
--constructor_season_points(constructor_id, year) totals a team’s points, giving the constructors’ championship.
--driver_championship_rank(driver_id, year) returns a driver’s standings position for a season. It builds on driver_season_points.
--avg_pit_duration(constructor_id, year) returns a team’s average pit-stop time, to compare pit-stop efficiency.
--fastest_pit_stop(race_id) returns the quickest pit stop of a race.
--pit_stop_count(driver_id, race_id) returns how many stops a driver made in a race.
--dnf_rate(constructor_id, year) gives the percentage of a team’s race entries that did not finish, using the status table.
--driver_exists(driver_id) and race_exists(race_id) return TRUE or FALSE, so procedures can raise clean exceptions.
+- driver_season_points(driver_id, year) totals a driver’s points for a season.
+- constructor_season_points(constructor_id, year) totals a team’s points, giving the constructors’ championship.
+- driver_championship_rank(driver_id, year) returns a driver’s standings position for a season. It builds on driver_season_points.
+- avg_pit_duration(constructor_id, year) returns a team’s average pit-stop time, to compare pit-stop efficiency.
+- fastest_pit_stop(race_id) returns the quickest pit stop of a race.
+- pit_stop_count(driver_id, race_id) returns how many stops a driver made in a race.
+- dnf_rate(constructor_id, year) gives the percentage of a team’s race entries that did not finish, using the status table.
+- driver_exists(driver_id) and race_exists(race_id) return TRUE or FALSE, so procedures can raise clean exceptions.
 
 **Procedures**
 
