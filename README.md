@@ -57,17 +57,17 @@ record_pit_stop uses the same checks, validates lap number and duration, then in
 
 An explicit cursor loops through a race’s results in finishing order to build the standings.
 
-Triggers
+**Triggers**
 
 Duplicate position trigger: blocks two drivers sharing a finishing position in one race, ignoring unclassified (retired) drivers.
 Pit-stop validation trigger: rejects zero or negative durations and laps beyond the race distance.
 Audit trigger: logs every correction to RESULT in AUDIT_LOG, with old value, new value, user and timestamp.
 
-Package
+**Package**
 
 f1_pkg groups the functions, procedures and cursor logic.
 
-Exceptions
+**Exceptions**
 
 Custom exceptions for unknown driver, unknown race, duplicate position and invalid pit-stop data.
 
