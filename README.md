@@ -6,15 +6,21 @@
 **Instructor:** Eric Maniraguha
 
 ## Problem Statement
-Formula 1 generates large volumes of race data every season: results, lap times and pit stops for every Grand Prix since 1950. This data is usually published as separate files and web pages, with no single structured database that enforces rules on it. As a result:
+## Problem Statement
 
-Data errors go unnoticed. Two drivers can be recorded in the same finishing position, or a pit stop can be logged with an impossible duration or on a lap beyond the race distance.
-Team performance is hard to compare. Pit-stop efficiency is a major factor in race outcomes, but there is no easy, consistent way to compare it across teams and seasons.
-Standings are slow and error-prone to produce. Without a database, championship points and race standings must be recalculated by hand or with ad hoc spreadsheets, which causes inconsistencies.
+Formula 1 generates large volumes of race data every season, including results, lap times and pit stops for every Grand Prix since 1950. This data is usually published across separate files and web pages, without a single structured database that consistently validates it. As a result:
+
+1. **Data errors go unnoticed.** Two drivers can be recorded in the same finishing position, or a pit stop can be logged with an impossible duration or on a lap beyond the race distance. Sasikumar et al. (2025) identified missing values in Formula 1 race data, including missing lap times and driver positions, highlighting the importance of validating and properly handling incomplete records before analysis.
+
+2. **Team performance is hard to compare.** Pit-stop efficiency is a major factor in race outcomes, but there is no easy, consistent way to compare it across teams and seasons.
+
+3. **Standings are slow and error-prone to produce.** Without a structured database, championship points and race standings may need to be recalculated using manual methods or separate spreadsheets, increasing the risk of inconsistencies.
+
+Furthermore, the FIA 2027 Sporting Regulations, particularly Articles B6.3.6 and B2.5.5, establish requirements relating to tyre usage and race classification. These regulations will provide a reference for developing database validation rules to ensure that recorded race results and tyre strategies comply with the relevant sporting requirements.
 
 ## Objectives
 **Main objective**
-To design and implement a reliable Oracle database for Formula 1 race data, using PL/SQL to validate the data and to produce race standings and pit-stop performance statistics.
+To design and implement a reliable Oracle database for Formula 1 race data, using PL/SQL to validate race records, handle missing or inconsistent data, enforce relevant FIA Sporting Regulations (B6.3.6 and B2.5.5), and generate race standings and pit-stop performance statistics.
 
 **Specific objectives**
 
@@ -25,9 +31,10 @@ Enforce rules and audit changes. Use triggers to block duplicate finishing posit
 Add an interactive layer. Connect a user interface (APEX or Streamlit) to the Oracle database so users can view standings and pit-stop statistics, and record results through the PL/SQL procedures.
 
 ## Data Source
-Kaggle, Formula 1 World Championship (1950-2024) by Vopani.
-Link: https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020
-Licence: CC0: Public Domain (as stated on the Kaggle dataset page)
+- Kaggle, Formula 1 World Championship (1950-2024) by Vopani.
+-Link: https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020
+- Licence: CC0: Public Domain (as stated on the Kaggle dataset page)
+- Limitation: pit-stop data only covers later seasons
 
 ## Innovation
 Innovation: Interactive F1 Race Data Application (Oracle APEX)
@@ -48,9 +55,8 @@ DRIVER, CONSTRUCTOR, CIRCUIT, RACE, RESULT_STATUS, RESULT, PIT_STOP, LAP_TIME, A
 - driver_exists(driver_id) and race_exists(race_id) return TRUE or FALSE, so procedures can raise clean exceptions.
 
 **Procedures**
-
-record_result uses driver_exists and race_exists, then validates the constructor and status and inserts the result.
-record_pit_stop uses the same checks, validates lap number and duration, then inserts the stop.
+- record_result uses driver_exists and race_exists, then validates the constructor and status and inserts the result.
+- record_pit_stop uses the same checks, validates lap number and duration, then inserts the stop.
 
 **Cursor**
 
@@ -71,3 +77,16 @@ f1_pkg groups the functions, procedures and cursor logic.
 Custom exceptions for unknown driver, unknown race, duplicate position and invalid pit-stop data.
 
 ## References
+
+
+1. Fédération Internationale de l'Automobile. (2026). *2027 Formula 1 regulations: Section B (Sporting)* (Issue 01). FIA. https://www.fia.com/regulation/category/110
+
+2. Jolpica. (n.d.). *jolpica-f1* [Computer software]. GitHub. https://github.com/jolpica/jolpica-f1
+
+3. Oracle. (2021). *Database PL/SQL Language Reference (Oracle Database 21c).* Oracle Corporation. https://docs.oracle.com/en/database/oracle/oracle-database/21/lnpls/plsql-triggers.html
+
+4. Rao, R. (2024). *Formula 1 World Championship (1950–2024)* [Dataset]. Kaggle. https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020
+
+5. Sasikumar, A., Leema, A. A., & Balakrishnan, P. (2025). Data-driven pit stop decision support for Formula 1 using deep learning models. *Frontiers in Artificial Intelligence, 8*, Article 1673148. https://doi.org/10.3389/frai.2025.1673148
+
+6. Thomas, D., Jiang, J., Kori, A., Russo, A., Winkler, S., Sale, S., McMillan, J., Belardinelli, F., & Rago, A. (2026). Race strategy reinforcement learning: Optimising pitstop strategy with emergent tactics in Formula One. *Machine Learning, 115*, Article 146. https://doi.org/10.1007/s10994-026-07081-3
